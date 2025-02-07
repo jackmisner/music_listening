@@ -3,6 +3,7 @@ class Album():
         self.artist = artist
         self.album = album
         self.song_list = song_list
+        self.album_dict = {album:song_list}
 
     def __repr__(self):
         return f"Artist: {self.artist}, Album: {self.album}, Songs: {', '.join(self.song_list)}"
@@ -21,18 +22,24 @@ class Music_Listener():
    
     def listen_to(self, listened_to_song):
         self.listened_to_song = listened_to_song
+        self.listened_to_song_list = []
+        self.album_and_songs = {}
         for item in self.available_music_list:
-            print(item)
             for song in item.song_list:
                 if song == listened_to_song:
-                    self.listened_to_dict[item.artist] = {item.album:listened_to_song}
-        print(self.listened_to_dict)
+                    self.album_and_songs = item.album_dict
+                    if len(list(self.listened_to_dict.values())) == 0:
+                        self.listened_to_song_list.append(listened_to_song)
+                        self.album_and_songs = {item.album:self.listened_to_song_list}
+                        self.listened_to_dict[item.artist] = self.album_and_songs
+                    else:
+                        entry = list(self.listened_to_dict.values())
+                        if any(item.album in d for d in entry): 
+                            self.listened_to_song_list = self.listened_to_dict[item.artist][item.album]
+                            self.listened_to_song_list.append(listened_to_song)
+                            self.album_and_songs = {item.album:self.listened_to_song_list}
+                        else:
+                            self.listened_to_song_list.append(listened_to_song)
+                            self.album_and_songs = {item.album:self.listened_to_song_list}
+                            self.listened_to_dict[item.artist] = self.album_and_songs
 
-
-
-
-# class Song():
-#             # name, album, artist 
-
-
-#             [{"Taxman": {artist: , album_title: }]
