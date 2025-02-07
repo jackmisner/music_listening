@@ -23,22 +23,13 @@ class Music_Listener():
     def listen_to(self, listened_to_song):
         self.listened_to_song = listened_to_song
         self.listened_to_song_list = []
-        self.album_and_songs = {}
         for item in self.available_music_list:
             for song in item.song_list:
                 if song == listened_to_song:
-                    self.album_and_songs = item.album_dict
                     entry = list(self.listened_to_dict.values())
-                    if len(entry) == 0:
-                        self.listened_to_song_list.append(listened_to_song)
-                        self.album_and_songs = {item.album:self.listened_to_song_list}
-                        self.listened_to_dict[item.artist] = self.album_and_songs
-                    elif any(item.album in d for d in entry):
+                    if any(item.album in d for d in entry):
                         self.listened_to_song_list = self.listened_to_dict[item.artist][item.album]
-                        self.listened_to_song_list.append(listened_to_song)
-                        self.album_and_songs = {item.album:self.listened_to_song_list}
-                    else:
-                        self.listened_to_song_list.append(listened_to_song)
-                        self.album_and_songs = {item.album:self.listened_to_song_list}
-                        self.listened_to_dict[item.artist] = self.album_and_songs
+                    self.listened_to_song_list.append(listened_to_song)
+                    self.album_and_songs = {item.album:self.listened_to_song_list}
+                    self.listened_to_dict[item.artist] = self.album_and_songs
 
