@@ -28,18 +28,17 @@ class Music_Listener():
             for song in item.song_list:
                 if song == listened_to_song:
                     self.album_and_songs = item.album_dict
-                    if len(list(self.listened_to_dict.values())) == 0:
+                    entry = list(self.listened_to_dict.values())
+                    if len(entry) == 0:
                         self.listened_to_song_list.append(listened_to_song)
                         self.album_and_songs = {item.album:self.listened_to_song_list}
                         self.listened_to_dict[item.artist] = self.album_and_songs
+                    elif any(item.album in d for d in entry):
+                        self.listened_to_song_list = self.listened_to_dict[item.artist][item.album]
+                        self.listened_to_song_list.append(listened_to_song)
+                        self.album_and_songs = {item.album:self.listened_to_song_list}
                     else:
-                        entry = list(self.listened_to_dict.values())
-                        if any(item.album in d for d in entry): 
-                            self.listened_to_song_list = self.listened_to_dict[item.artist][item.album]
-                            self.listened_to_song_list.append(listened_to_song)
-                            self.album_and_songs = {item.album:self.listened_to_song_list}
-                        else:
-                            self.listened_to_song_list.append(listened_to_song)
-                            self.album_and_songs = {item.album:self.listened_to_song_list}
-                            self.listened_to_dict[item.artist] = self.album_and_songs
+                        self.listened_to_song_list.append(listened_to_song)
+                        self.album_and_songs = {item.album:self.listened_to_song_list}
+                        self.listened_to_dict[item.artist] = self.album_and_songs
 
