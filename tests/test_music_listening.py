@@ -24,6 +24,7 @@ def test_listen_to_track_lovesong():
     assert "Lovesong" in ml.listened_to_dict["The Cure"]["Disintigration"]
 
 def test_listen_to_track_taxman():
+    ml.listened_to_dict = {}
     ml.listen_to("Taxman")
     assert "The Beatles" in ml.listened_to_dict.keys()
     assert "Revolver" in ml.listened_to_dict["The Beatles"].keys()
@@ -37,4 +38,11 @@ def test_return_listened_to():
     assert ml.listened_to_dict == {"The Beatles": {"Revolver": ["Taxman"]}, "Radiohead": {"OK Computer": ["No Surprises"]}}
     ml.listen_to('Lucky')
     assert ml.listened_to_dict == {"The Beatles": {"Revolver": ["Taxman"]}, "Radiohead": {"OK Computer": ["No Surprises", "Lucky"]}}
+    ml.listen_to('Eleanor Rigby')
+    assert ml.listened_to_dict == {"The Beatles": {"Revolver": ["Taxman", "Eleanor Rigby"]}, "Radiohead": {"OK Computer": ["No Surprises", "Lucky"]}}
+    ml.listen_to('Lovesong')
+    assert ml.listened_to_dict == {"The Beatles": {"Revolver": ["Taxman", "Eleanor Rigby"]}, "Radiohead": {"OK Computer": ["No Surprises", "Lucky"]}, "The Cure": {"Disintigration": ["Lovesong"]}}
+    ml.listened_to_dict = {}
+    ml.listen_to('Lovesong')
+    assert ml.listened_to_dict == {"The Cure": {"Disintigration": ["Lovesong"]}}
 
