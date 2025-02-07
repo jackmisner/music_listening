@@ -1,12 +1,4 @@
-class Album():
-    def __init__(self, artist, album, song_list):
-        self.artist = artist
-        self.album = album
-        self.song_list = song_list
-        self.album_dict = {album:song_list}
-
-    def __repr__(self):
-        return f"Artist: {self.artist}, Album: {self.album}, Songs: {', '.join(self.song_list)}"
+from lib.album import *
 
 revolver = Album("The Beatles", "Revolver", ["Taxman","Eleanor Rigby","Here, There and Everywhere","Tomorrow Never Knows","Good Day Sunshine"])
 wtsmg = Album("Oasis", "What's The Story, Morning Glory", ["Wonderwall","Don't Look Back in Anger","Champagne Supernova","Roll with It","Some Might Say"])
@@ -17,13 +9,13 @@ wpsiatwin = Album('Arctic Monkeys', "Whatever People Say I Am: That's What I'm N
 class Music_Listener():
     def __init__(self, name):
         self.name = name
-        self.listened_to_dict = available_songs_dict = {}
-        self.available_music_list = [disintigration, wpsiatwin, revolver,wtsmg, ok_computer]
+        self.listened_to_dict = {}
+        self.available_albums_list = [disintigration, wpsiatwin, revolver,wtsmg, ok_computer]
    
     def listen_to(self, listened_to_song):
         self.listened_to_song = listened_to_song
         self.listened_to_song_list = []
-        for item in self.available_music_list:
+        for item in self.available_albums_list:
             for song in item.song_list:
                 if song == listened_to_song:
                     entry = list(self.listened_to_dict.values())
@@ -33,3 +25,5 @@ class Music_Listener():
                     self.album_and_songs = {item.album:self.listened_to_song_list}
                     self.listened_to_dict[item.artist] = self.album_and_songs
 
+    def return_listened_to(self):
+        return self.listened_to_dict
